@@ -1,0 +1,41 @@
+{
+  "name": "bricktop-intro",
+  "version": "1.0.0",
+  "description": "bricktop-productions 12-second production mark — Remotion composition",
+  "private": true,
+  "scripts": {
+    "dev": "remotion studio",
+    "build": "remotion render BricktopIntro out/bricktop-intro.webm --image-format=webm --codec=vp9",
+    "build:prores": "remotion render BricktopIntro out/bricktop-intro.mov --image-format=prores --pro-res-profile=4444",
+    "test": "echo \"no tests yet\"",
+    "lint": "eslint src --ext .ts,.tsx"
+  },
+  "dependencies": {
+    "@remotion/bundler": "^4.0.512",
+    "@remotion/paths": "^4.0.512",
+    "@remotion/player": "^4.0.512",
+    "@remotion/renderer": "^4.0.512",
+    "@remotion/shapes": "^4.0.512",
+    "@remotion/transitions": "^4.0.512",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "remotion": "^4.0.512",
+    "tone": "^15.1.22"
+  },
+  "devDependencies": {
+    "@remotion/cli": "^4.0.512",
+    "@remotion/eslint-config": "^4.0.0",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "eslint": "^8.0.0",
+    "typescript": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs"
+}
