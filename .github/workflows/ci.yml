@@ -1,0 +1,114 @@
+name: CI
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+    branches: [master, main]
+
+jobs:
+  test-render:
+    name: Test Render
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build composition (dry run)
+        run: npx remotion render BricktopIntro /dev/null --codec=h264 --frames=1
+        env:
+          # Disable GPU acceleration in CI
+          REMOTION_CHROMIUM_DISABLE_GPU: "true"
+
+      - name: Test linting
+        run: npm run lint
+
+  render-preview:
+    name: Render Preview
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    if: github.event_name == 'pull_request'
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Render preview (low quality, fast)
+        run: |
+          npx remotion render BricktopIntro out/preview.mp4 \
+            --codec=h264 \
+            --crf=30 \
+            --concurrency=2
+
+      - name: Upload preview artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: preview-video
+          path: out/preview.mp4
+          retention-days: 7
+
+  render-release:
+    name: Render Release
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Render final WebM (VP9, alpha)
+        run: |
+          npx remotion render BricktopIntro out/bricktop-intro.webm \
+            --codec=vp9 \
+            --enable-alpha
+
+      - name: Render final MP4 (H.264, fallback)
+        run: |
+          npx remotion render BricktopIntro out/bricktop-intro.mp4 \
+            --codec=h264 \
+            --crf=18
+
+      - name: Upload release artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-videos
+          path: |
+            out/bricktop-intro.webm
+            out/bricktop-intro.mp4
+          retention-days: 30
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: |
+            out/bricktop-intro.webm
+            out/bricktop-intro.mp4
+          generate_release_notes: true

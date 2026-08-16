@@ -5,18 +5,13 @@
   "private": true,
   "scripts": {
     "dev": "remotion studio",
-    "build": "remotion render BricktopIntro out/bricktop-intro.webm --image-format=webm --codec=vp9",
-    "build:prores": "remotion render BricktopIntro out/bricktop-intro.mov --image-format=prores --pro-res-profile=4444",
+    "build": "remotion render BricktopIntro out/bricktop-intro.webm --codec=vp9 --enable-alpha",
+    "build:mp4": "remotion render BricktopIntro out/bricktop-intro.mp4 --codec=h264 --crf=18",
+    "build:prores": "remotion render BricktopIntro out/bricktop-intro.mov --codec=prores --pro-res-profile=4444",
     "test": "echo \"no tests yet\"",
     "lint": "eslint src --ext .ts,.tsx"
   },
   "dependencies": {
-    "@remotion/bundler": "^4.0.512",
-    "@remotion/paths": "^4.0.512",
-    "@remotion/player": "^4.0.512",
-    "@remotion/renderer": "^4.0.512",
-    "@remotion/shapes": "^4.0.512",
-    "@remotion/transitions": "^4.0.512",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "remotion": "^4.0.512",
