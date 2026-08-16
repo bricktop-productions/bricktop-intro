@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { useCurrentFrame, useVideoConfig, Easing, interpolate } from "remotion";
+import { useCurrentFrame, useVideoConfig, Easing, interpolate, Audio } from "remotion";
 
 // Ease-out helpers since Remotion only provides ease-in variants
 const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
@@ -63,29 +63,35 @@ export const BricktopIntroComposition: React.FC = () => {
   );
 
   return (
-    <svg
-      width={width}
-      height={height}
-      style={{
-        transform: `scale(${scale})`,
-        transformOrigin: "center center",
-        opacity,
-        background: "transparent",
-      }}
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      {/* Phase 1: Particle Coalescence */}
-      <ParticleField frame={frame} colors={COLORS} particleCount={120} />
+    <>
+      {/* Procedural audio stem */}
+      <Audio src="public/bricktop-audio.wav" />
 
-      {/* Phase 2: "bricktop" Letter-Lock */}
-      <BricktopLetterLock frame={frame} color={COLORS.gold} />
+      {/* Visual composition */}
+      <svg
+        width={width}
+        height={height}
+        style={{
+          transform: `scale(${scale})`,
+          transformOrigin: "center center",
+          opacity,
+          background: "transparent",
+        }}
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        {/* Phase 1: Particle Coalescence */}
+        <ParticleField frame={frame} colors={COLORS} particleCount={120} />
 
-      {/* Phase 3: "productions" Etch-Write */}
-      <ProductionsEtchWrite frame={frame} color={COLORS.cream} accentColor={COLORS.orange} />
+        {/* Phase 2: "bricktop" Letter-Lock */}
+        <BricktopLetterLock frame={frame} color={COLORS.gold} />
 
-      {/* Phase 4: Seal Underline */}
-      <SealUnderline frame={frame} color={COLORS.gold} />
-    </svg>
+        {/* Phase 3: "productions" Etch-Write */}
+        <ProductionsEtchWrite frame={frame} color={COLORS.cream} accentColor={COLORS.orange} />
+
+        {/* Phase 4: Seal Underline */}
+        <SealUnderline frame={frame} color={COLORS.gold} />
+      </svg>
+    </>
   );
 };
 
