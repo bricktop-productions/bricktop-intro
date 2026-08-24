@@ -9,7 +9,7 @@
     "build:mp4": "remotion render BricktopIntro out/bricktop-intro.mp4 --codec=h264 --crf=18",
     "build:prores": "remotion render BricktopIntro out/bricktop-intro.mov --codec=prores --pro-res-profile=4444",
     "test": "echo \"no tests yet\"",
-    "lint": "eslint src --ext .ts,.tsx"
+    "lint": "eslint src"
   },
   "dependencies": {
     "react": "^18.3.1",
