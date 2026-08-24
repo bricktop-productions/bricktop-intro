@@ -1,7 +1,10 @@
-export default [
+import tseslint from "typescript-eslint";
+
+export default tseslint.config(
   {
     ignores: ["out/**", "public/bricktop-audio.wav", "node_modules/**", ".git/**", "dist/**"],
   },
+  ...tseslint.configs.recommended,
   {
     files: ["src/**/*.ts", "src/**/*.tsx"],
     languageOptions: {
@@ -30,7 +33,7 @@ export default [
     rules: {
       "react/react-in-jsx-scope": "off",
       "react/jsx-uses-react": "off",
-      "no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }],
+      "@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }],
       "no-console": "off",
     },
     settings: {
@@ -38,5 +41,5 @@ export default [
         version: "18.3",
       },
     },
-  },
-];
+  }
+);
