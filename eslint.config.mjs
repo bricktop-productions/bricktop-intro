@@ -1,8 +1,9 @@
 export default [
   {
-    ignores: ["out/", "public/bricktop-audio.wav", "node_modules/", ".git/", "dist/"],
+    ignores: ["out/**", "public/bricktop-audio.wav", "node_modules/**", ".git/**", "dist/**"],
   },
   {
+    files: ["src/**/*.ts", "src/**/*.tsx"],
     languageOptions: {
       parserOptions: {
         ecmaVersion: 2022,
