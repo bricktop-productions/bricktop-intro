@@ -213,8 +213,8 @@ const BricktopLetterLock: React.FC<BricktopLetterLockProps> = ({
             >
               {letter}
             </text>
-            {/* Metallic glint - only for o and p (indices 5, 6) */}
-            {(i === 5 || i === 6) && letterProgress > 0.5 && letterProgress < 0.7 && (
+            {/* Metallic glint */}
+            {letterProgress > 0.5 && letterProgress < 0.7 && (
               <rect
                 x={startX + i * letterWidth}
                 y={440}
@@ -226,25 +226,24 @@ const BricktopLetterLock: React.FC<BricktopLetterLockProps> = ({
                 opacity={(letterProgress - 0.5) * 5}
               />
             )}
+            {/* Square around 'o' (index 5) and 'p' (index 6) */}
+            {(i === 5 || i === 6) && letterProgress > 0.7 && (
+              <rect
+                x={startX + i * letterWidth + 10}
+                y={430}
+                width={letterWidth - 20}
+                height={120}
+                fill="transparent"
+                stroke={color}
+                strokeWidth={3}
+                opacity={(letterProgress - 0.7) * 3.33}
+                rx={4}
+                ry={4}
+              />
+            )}
           </React.Fragment>
         );
       })}
-      
-      {/* SINGLE square around 'o' and 'p' together (indices 5 and 6) — persists for entire letter-lock phase */}
-      {progress > 0.6 && (
-        <rect
-          x={startX + 5 * letterWidth + 5}
-          y={425}
-          width={2 * letterWidth - 10}
-          height={110}
-          fill="transparent"
-          stroke={color}
-          strokeWidth={4}
-          opacity={1}
-          rx={6}
-          ry={6}
-        />
-      )}
     </React.Fragment>
   );
 };
