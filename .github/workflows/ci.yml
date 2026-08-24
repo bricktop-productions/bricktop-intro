@@ -25,13 +25,13 @@ jobs:
         run: npm ci
 
       - name: Build composition (dry run) - BricktopIntro (12s)
-        run: npx remotion render BricktopIntro /dev/null --codec=h264 --frames=1
+        run: npx remotion render BricktopIntro /tmp/test-bricktop.mp4 --codec=h264 --frames=1
         env:
           # Disable GPU acceleration in CI
           REMOTION_CHROMIUM_DISABLE_GPU: "true"
 
       - name: Build composition (dry run) - BricktopIntroSimple (6s)
-        run: npx remotion render BricktopIntroSimple /dev/null --codec=h264 --frames=1
+        run: npx remotion render BricktopIntroSimple /tmp/test-bricktop-simple.mp4 --codec=h264 --frames=1
         env:
           REMOTION_CHROMIUM_DISABLE_GPU: "true"
 
